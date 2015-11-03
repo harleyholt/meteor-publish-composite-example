@@ -1,3 +1,21 @@
 <template name="player">
-  <h1>{{name}}</h1>
+  <main>
+    <h1>{{name}}</h1>
+    <section>
+      <h2>Weapons</h2>
+      <ul>
+        {{#each playerWeapons}}
+          <li>{{name}}</li>
+        {{/each}}
+      </ul>
+    </section>
+    <section>
+      <h2>Armors</h2>
+      <ul>
+        {{#each playerArmors}}
+          <li>{{name}}</li>
+        {{/each}}
+      </ul>
+    </section>
+  </main>
 </template>

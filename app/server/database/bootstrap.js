@@ -22,15 +22,18 @@ Meteor.startup(function(){
 
     const broom = Weapons.findOne({name: 'Broom'});
     const bucket = Weapons.findOne({name: 'Bucket'});
+    const skillet = Weapons.findOne({name: 'Castiron Skillet'});
 
     const strainer = Armors.findOne({name: 'Pasta Strainer'});
+    const vest = Armors.findOne({name: 'Bulletproof Vest'});
+    const shinGuards = Armors.findOne({name: 'Shin Guards'});
 
-    const player = {
-      name: 'Brock',
-      weapons: [broom._id, bucket._id],
-      armors: [strainer._id],
-      health: 100
-    };
-    Players.insert(player);
+    const players = [
+      {name: 'Brock', weapons: [broom._id, bucket._id], armors: [strainer._id], health: 100},
+      {name: 'Lily', weapons: [skillet._id], armors: [shinGuards._id, vest._id], health: 62},
+      {name: 'Ike', weapons: [], armors: [], health: 88}
+    ];
+    players.forEach((p) => { Players.insert(p); });
   }
+
 });
