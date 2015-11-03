@@ -1,0 +1,41 @@
+{
+  "node": true,
+  "browser": true,
+  "esnext": true,
+
+  "predef": [
+    "Meteor",
+    "Mongo",
+    "Template",
+    "ReactiveVar",
+    "ReactiveDict",
+    "DDP",
+    "check",
+    "Spacebars",
+    "Package",
+    "Match",
+    "Random",
+    "Accounts",
+    "EJSON",
+    "RouteController",
+    "Email",
+    "HTTP",
+    "Session",
+    "Tracker",
+    "Blaze",
+    "WebApp",
+    "Google",
+    "OAuth",
+    "ServiceConfiguration",
+    "Doximity",
+
+    "Router",
+
+    "Players",
+    "Weapons",
+    "Armors"
+  ],
+
+  "strict": false,
+  "quote": "single"
+}
