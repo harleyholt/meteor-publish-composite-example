@@ -52,25 +52,32 @@
    }
  }
 
- if (require.main === module) {
-   const host = 'localhost';
-   const port = 3000;
-   const ddpClient = new DDPClient({host, port});
-   const client = new AppSubscriber(ddpClient);
-   client.connect()
-    .then(function() {
-      return client.subscribe();
-    })
-    .then(function(subscriptionId) {
-      setInterval(() => {
-        client.unsubscribe(subscriptionId);
-        console.info('Subscriber completing successfully.');
-        process.exit(0);
-      }, 20*1000);
-    })
-    .error(function(err) {
-      console.error('The subscriber failed with an error');
-      console.error(err);
-      process.exit(1);
-    });
+if (require.main === module) {
+  const host = 'localhost';
+  const port = 3000;
+  const ddpClient = new DDPClient({host, port});
+  const clients = [];
+
+  const another = function() {
+    const client = new AppSubscriber(ddpClient);
+    client.connect()
+      .then(function() { return client.subscribe(); })
+      .error(function(err) {
+        console.error('The subscriber failed with an error');
+        console.error(err);
+        process.exit(1);
+      });
+    return client;
+  };
+
+  process.on('SIGINT', function() {
+    console.info('Shutting down');
+    for (var i = 0; i < clients.length; i++) {
+      client._ddp.close();
+    }
+    console.info('Done. Goodbye.');
+  });
+  for(var i = 0; i < 100; i++) {
+    clients.push(another());
+  }
  }
