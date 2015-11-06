@@ -1,12 +1,10 @@
-/**
- * This a client to our app which performs database operations in order to drive load to the
- * app. It inserts and updates documents in order to trigger changes to the subscriptions.
- */
-
  import DDPClient from 'ddp';
  import Promise from 'bluebird';
 
- class AppChangeDriver {
+/**
+ * This a client to our app which subscibes to collections.
+ */
+ class AppSubscriber {
 
    constructor(ddpClient) {
      this._ddp = ddpClient;
@@ -58,7 +56,7 @@
    const host = 'localhost';
    const port = 3000;
    const ddpClient = new DDPClient({host, port});
-   const client = new AppChangeDriver(ddpClient);
+   const client = new AppSubscriber(ddpClient);
    client.connect()
     .then(function() {
       return client.subscribe();
@@ -66,12 +64,13 @@
     .then(function(subscriptionId) {
       setInterval(() => {
         client.unsubscribe(subscriptionId);
-        console.info('Driver completing successfully.');
+        console.info('Subscriber completing successfully.');
         process.exit(0);
       }, 20*1000);
     })
-    .error(function() {
-      console.error('The driver failed with an error');
+    .error(function(err) {
+      console.error('The subscriber failed with an error');
+      console.error(err);
       process.exit(1);
     });
  }
