@@ -16,7 +16,7 @@ if (require.main === module) {
 
   process.on('SIGINT', function(){
     console.info('Exiting');
-    exiting = false;
+    exiting = true;
   });
 
   const keepWriting = function() {

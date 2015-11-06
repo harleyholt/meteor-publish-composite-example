@@ -35,11 +35,10 @@
      }
    }
 
-   subscribe() {
+   subscribe(cb) {
      console.info('Subscribing');
      this._connect().then(() => {
-       console.info('Subscribed to players');
-       return Promise.promisify(this._ddp.subscribe, {context: this._ddp})('players');
+       return this._ddp.subscribe('players', [], cb);
      });
    }
 
@@ -60,8 +59,16 @@ if (require.main === module) {
 
   const another = function() {
     const client = new AppSubscriber(ddpClient);
+    const onSubscribed = function() {
+      console.info('Subscribed to players');
+      console.info('Observing changes');
+      const observer = client._ddp.observe('players');
+      observer.added = function(id, doc) {
+        console.log(`New player seen with id ${id}`);
+      };
+    };
     client.connect()
-      .then(function() { return client.subscribe(); })
+      .then(function() { return client.subscribe(onSubscribed); })
       .error(function(err) {
         console.error('The subscriber failed with an error');
         console.error(err);
@@ -77,7 +84,7 @@ if (require.main === module) {
     }
     console.info('Done. Goodbye.');
   });
-  for(var i = 0; i < 100; i++) {
+  for(var i = 0; i < 1; i++) {
     clients.push(another());
   }
  }
