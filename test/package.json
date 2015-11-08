@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run-graphite": "docker run -d --name graphite --restart=always -p 40080:80 -p 42003:2003 -p 48125:8125/udp -p 48126:8126 hopsoft/graphite-statsd"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.0.5",
     "chance": "^0.8.0",
-    "ddp": "^0.11.0"
+    "ddp": "^0.11.0",
+    "node-statsd": "^0.1.1"
   }
 }
