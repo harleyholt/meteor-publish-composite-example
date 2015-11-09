@@ -3,6 +3,7 @@ import DDPClient from 'ddp';
 import Promise from 'bluebird';
 import Chance from 'chance';
 import StatsD from 'node-statsd';
+import uuid from 'node-uuid';
 
 const chance = new Chance();
 const statsd = new StatsD({port: 48125, prefix: 'mpc.', cacheDns: true});
@@ -25,14 +26,22 @@ if (require.main === module) {
   const port = 3000;
   const client = new DDPClient({host, port});
 
-  let exiting = false;
-  let count = 0;
+  // The heartbeat to statsd which counts the number of writers active at a given time
+  // Runs every second
+  const writerId = uuid.v4();
+  setInterval(function() {
+    statsd.unique('writers', writerId);
+  }, 1000);
 
+  // Handle Ctrl-C gracefully
+  let exiting = false;
   process.on('SIGINT', function(){
     console.info(`Writer shutting down; created ${count} new players`);
     exiting = true;
   });
 
+  // Continuously keep creating new players until Ctrl-C is hit to exit
+  let count = 0;
   const keepWriting = function() {
     newPlayer(client, function(error, id) {
       if (error) {
@@ -46,6 +55,7 @@ if (require.main === module) {
         keepWriting();
       } else {
         client.close();
+        process.exit(0);
       }
     });
   };

@@ -12,6 +12,7 @@
     "bluebird": "^3.0.5",
     "chance": "^0.8.0",
     "ddp": "^0.11.0",
-    "node-statsd": "^0.1.1"
+    "node-statsd": "^0.1.1",
+    "node-uuid": "^1.4.3"
   }
 }
