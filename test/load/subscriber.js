@@ -67,6 +67,12 @@ if (require.main === module) {
 
   const subscriberId = uuid.v4();
 
+  // Heartbeat to statsd for counting the number of active subscribers
+  // Every second
+  setInterval(function() {
+    statsd.unique('subscribers', subscriberId);
+  }, 1000);
+
   const another = function() {
     const client = new AppSubscriber(ddpClient);
     const onSubscribed = function() {
