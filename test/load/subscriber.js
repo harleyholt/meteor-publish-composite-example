@@ -102,13 +102,18 @@ if (require.main === module) {
 
   process.on('SIGINT', function() {
     console.info('Shutting down');
-    for (var i = 0; i < clients.length; i++) {
-      client._ddp.close();
+    try {
+      for (var i = 0; i < clients.length; i++) {
+        client._ddp.close();
+      }
+    } catch (e) {
+      console.info('Error closing connections; just exit');
+    } finally {
+      console.info('Done. Goodbye.');
+      process.exit(0);
     }
-    console.info('Done. Goodbye.');
-    process.exit(0);
   });
-  for(var i = 0; i < 1; i++) {
+  for(var i = 0; i < 10; i++) {
     clients.push(another());
   }
 }
