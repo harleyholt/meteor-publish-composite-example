@@ -30,6 +30,6 @@ Meteor.startup(function(){
     // A mongo query was issued
     // TODO: This is not working. First thought is that meteor is not using the same mongo
     // library that app metrics is hooking into. Investigate.
-    statsd.counter('mongo.query');
+    statsd.increment('mongo.query');
   });
 });

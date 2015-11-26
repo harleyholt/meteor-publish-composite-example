@@ -3,9 +3,24 @@ Meteor.startup(function(){
 
   const StatsD = Meteor.npmRequire('node-statsd');
   const statsd = new StatsD({port: 48125, prefix: 'mpc.', cacheDns: true});
-  Meteor.events.on('subscriptionStarted', function() {
-    console.log('subscription started', arguments);
-  });
-  console.log('listening for events');
 
+  Meteor.instrumentation.on('subscriptionStarted', function() {
+    console.log('testing', 'subscription started');
+    statsd.increment('server.subscriptions');
+  });
+  Meteor.instrumentation.on('subscriptionStopped', function() {
+    statsd.decrement('server.subscriptions');
+  });
+
+  Meteor.instrumentation.on('sessionOpened', function() {
+    statsd.increment('server.sessions');
+  });
+  Meteor.instrumentation.on('sessionClosed', function() {
+    statsd.decrement('server.sessions');
+  });
+  Meteor.instrumentation.on('sessionSend', function() {
+    statsd.increment('server.sessions.messages');
+  });
+
+  console.log('Application server is listening for internal meteor events');
 });
