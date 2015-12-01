@@ -5,7 +5,6 @@ Meteor.startup(function(){
   const statsd = new StatsD({port: 48125, prefix: 'mpc.', cacheDns: true});
 
   Meteor.instrumentation.on('subscriptionStarted', function() {
-    console.log('testing', 'subscription started');
     statsd.increment('server.subscriptions');
   });
   Meteor.instrumentation.on('subscriptionStopped', function() {

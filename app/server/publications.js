@@ -1,45 +1,30 @@
 
-Meteor.publishComposite('players', function() {
+const children = {
+  players:  [
+    {
+      // Weapons
+      find: function(player) {
+        return Weapons.find({_id: {$in: player.weapons}});
+      }
+    },
+    {
+      // Armors
+      find: function(player) {
+        return Armors.find({_id: {$in: player.armors}});
+      }
+    }
+  ]
+};
+
+Meteor.publishComposite('players', function(playerId) {
   return {
     find: function() {
-      return Players.find({});
-    },
-    children: [
-      {
-        // Weapons
-        find: function(player) {
-          return Weapons.find({_id: {$in: player.weapons}});
-        }
-      },
-      {
-        // Armors
-        find: function(player) {
-          return Armors.find({_id: {$in: player.armors}});
-        }
+      const filter = {};
+      if (playerId !== undefined) {
+        filter._id = playerId;
       }
-    ]
-  };
-});
-
-Meteor.publishComposite('playerData', function(playerId) {
-  return {
-    find: function() {
-      return Players.find({_id: playerId});
+      return Players.find(filter);
     },
-    children: [
-      {
-        // Weapons
-        find: function(player) {
-          return Weapons.find({_id: {$in: player.weapons}});
-        }
-      },
-      {
-        // Armors
-        find: function(player) {
-          return Armors.find({_id: {$in: player.armors}});
-        }
-      }
-    ]
-
+    children: children.players
   };
 });

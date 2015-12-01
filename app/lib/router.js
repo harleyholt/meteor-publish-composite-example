@@ -14,7 +14,7 @@ Router.route('/', {
 Router.route('/player/:playerId', {
   name: 'player',
   waitOn: function() {
-    return [Meteor.subscribe('playerData', this.params.playerId)];
+    return [Meteor.subscribe('players', this.params.playerId)];
   },
   data: function() {
     return Players.findOne({_id: this.params.playerId});
