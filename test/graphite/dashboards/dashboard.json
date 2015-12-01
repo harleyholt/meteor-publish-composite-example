@@ -1,0 +1,26 @@
+[
+  {
+    "target": [
+      "stats_counts.mpc.server.sessions"
+    ],
+    "title": "Server Sessions"
+  },
+  {
+    "target": [
+      "stats_counts.mpc.server.subscriptions"
+    ],
+    "title": "Server Subscriptions"
+  },
+  {
+    "target": [
+      "stats.sets.mpc.subscribers.count"
+    ],
+    "title": "Load Subscribers"
+  },
+  {
+    "target": [
+      "stats.sets.mpc.writers.count"
+    ],
+    "title": "Load Drivers"
+  }
+]
