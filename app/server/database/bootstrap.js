@@ -1,5 +1,17 @@
 Meteor.startup(function(){
 
+  if (!Materials.find().count()) {
+    const materials = [
+      {name: 'Aluminum', cost: 50},
+      {name: 'Iron', cost: 30},
+      {name: 'Wood', cost: 10},
+      {name: 'Plastic', cost: 10},
+      {name: 'Magic', cost: 100},
+      {name: 'Ballistic Fiber', cost: 120},
+    ];
+    materials.forEach((m) => { Materials.insert(m); });
+  }
+
   if (!Weapons.find().count()) {
     const weapons = [
       {name: 'Broom', damage: 3, weight: 6},
