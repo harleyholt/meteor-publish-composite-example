@@ -9,3 +9,20 @@ What is the memory usage of reactive vs. unreactive publications?
 
 I want to be able to correlate those graphs to what is happening both on the server and actions
 being performed by the client.
+
+What kind of tests do I want to run?
+
+# Reactive Joins and the Publish Composite Pattern
+Test how much reactive joins cost in both memory (because of all the observers) and the CPU time
+required to get the subscription to ready and to update clients when an observed document changes.
+
+I ultimately want compare this to:
+*  A manually coded reactive join
+*  A non-reactive join
+*  Embedded documents instead of joins
+
+3 levels of documents: players -> weapons -> materials.
+
+Subscribers start up and subscribe to the publication. A driver starts up and subscribes to data.
+It also inserts documents and updates documents based on keyboard input (for now) and then later
+some automated workload.
