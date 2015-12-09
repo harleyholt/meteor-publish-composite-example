@@ -12,20 +12,27 @@ Meteor.startup(function(){
     materials.forEach((m) => { Materials.insert(m); });
   }
 
+  const aluminum = Materials.find({name: 'Aluminum'});
+  const iron = Materials.find({name: 'Iron'});
+  const wood = Materials.find({name: 'Wood'});
+  const plastic = Materials.find({name: 'Plastic'});
+  const magic = Materials.find({name: 'Magic'});
+  const ballisticFiber = Materials.find({name: 'Ballistic Fiber'});
+
   if (!Weapons.find().count()) {
     const weapons = [
-      {name: 'Broom', damage: 3, weight: 6},
-      {name: 'Castiron Skillet', damage: 8, weight: 12},
-      {name: 'Bucket', damage: 1, weight: 3}
+      {name: 'Broom', damage: 3, weight: 6, materials: [wood._id]},
+      {name: 'Castiron Skillet', damage: 8, weight: 12, materials: [iron._id]},
+      {name: 'Bucket', damage: 1, weight: 3, materials: [aluminum._id, magic._id]}
     ];
     weapons.forEach((w) => { Weapons.insert(w); });
   }
 
   if (!Armors.find().count()) {
     const armor = [
-      {name: 'Pasta Strainer', defense: 2, weight: 2},
-      {name: 'Bulletproof Vest', defense: 20, weight: 8},
-      {name: 'Shin Guards', defense: 1, weight: 1}
+      {name: 'Pasta Strainer', defense: 2, weight: 2, materials: [aluminum._id, magic._id]},
+      {name: 'Bulletproof Vest', defense: 20, weight: 8, materials: [ballisticFiber._id]},
+      {name: 'Shin Guards', defense: 1, weight: 1, materials: [plastic._id]}
     ];
     armor.forEach((a) => { Armors.insert(a); });
   }
