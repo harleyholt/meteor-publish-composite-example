@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run-graphite": "docker run -d --name graphite --restart=always -p 40080:80 -p 42003:2003 -p 48125:8125/udp -p 48126:8126 hopsoft/graphite-statsd"
+    "run-graphite": "docker run -d -p 40080:80 -p 48000:8000 -p 48125:8125/udp -p 48126:8126 --name kamon-grafana-dashboard kamon/grafana_graphite"
   },
   "author": "",
   "license": "ISC",
