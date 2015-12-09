@@ -1,4 +1,8 @@
 
+/**
+ * Watches for events emitted by an instrumented version of meteor and sends stats to the
+ * statsd server.
+ */
 Meteor.startup(function(){
 
   const StatsD = Meteor.npmRequire('node-statsd');
